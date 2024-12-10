@@ -19,7 +19,7 @@ def rearrange(x):
   while not valid(x):
     while x[r] != '.':
       if x[l] == '.':
-        print(f'swap l{l} r{r} x[l]{x[l]} x[r]{x[r]}')
+        #print(f'swap l{l} r{r} x[l]{x[l]} x[r]{x[r]}')
         x[l] = x[r]
         x[r] = '.'
         if valid(x): return
@@ -42,7 +42,41 @@ def one():
   print('result1: ', result)
 
 def two():
-  pass
+  with open('input.txt', 'r') as f:
+  #with open('sample.txt', 'r') as f:
+    lines = f.read().replace('\n','')
+  f = {}
+  b = []
+  fid = 0
+  pos = 0 
+  for i, char in enumerate(lines):
+    x = int(char)
+    if i % 2 == 0:
+      if x == 0:
+        raise ValueError("xd")
+      f[fid] = (pos,x)
+      fid += 1
+    else:
+      if x != 0: b.append((pos,x))
+    pos += x
+
+  while fid > 0:
+    fid -=1
+    pos, size = f[fid]
+    for i, (s, l) in enumerate(b):
+      if s >= pos:
+        b = b[:i]
+        break
+      if size <= l:
+        f[fid] = (s, size)
+        if s == l: b.pop(i)
+        else: b[i] = (s+size,l-size)
+        break
+  result = 0
+  for fid, (pos, size) in f.items():
+    for x in range(pos, pos+size):
+      result += fid*x
+  print('result2: ', result)
 
 if __name__ == '__main__':
   one()
