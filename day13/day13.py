@@ -39,7 +39,25 @@ def one():
   print(f'result1: {result}')
 
 def two():
-  pass
+  result = 0
+  with open('input.txt', 'r') as f:
+    data = f.readlines()
+  i = 0
+  while i < len(data):
+    if data[i] == '\n':
+      i += 1
+      continue
+    ax, ay = parse(data[i])
+    bx, by = parse(data[i+1])
+    tx, ty = parse(data[i+2])
+    tx += 10000000000000
+    ty += 10000000000000
+    ca = (tx*by-ty*bx)/(ax*by-ay*bx)
+    cb = (tx-ax*ca)/bx
+    if ca%1 == cb%1 == 0:
+      result += int(ca*3+cb)
+    i += 3
+  print(f'result1: {result}')
 
 if __name__ == '__main__':
   one()
