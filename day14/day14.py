@@ -12,6 +12,7 @@ def one():
       robots.append((int(x),int(y),int(px),int(py)))
   for r in robots:
     px,py = r[2],r[3]
+    floor[py][px] += 1
   #for f in floor: print(f)
   for _ in range(100):
     new_robots = []
