@@ -8,7 +8,6 @@ def one():
   with open('input.txt', 'r') as f:
     for line in f.readlines():
       px,py,x,y = re.findall(r'(\-*\d+)', line)
-      print(px,py,x,y)
       robots.append((int(x),int(y),int(px),int(py)))
   for r in robots:
     px,py = r[2],r[3]
@@ -17,7 +16,6 @@ def one():
   for _ in range(100):
     new_robots = []
     for r in robots:
-      print(f)
       px,py,x,y = r[2],r[3],r[0],r[1]
       floor[py][px] -= 1
       floor[(py+y)%H][(px+x)%W] += 1
