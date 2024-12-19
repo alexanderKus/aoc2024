@@ -7,7 +7,7 @@ def one():
   out = []
   i = 0
   while i < len(I)-1:
-    print(i, A,B,C)
+    #print(i, A,B,C)
     opcode = int(I[i])
     operand = int(I[i+1])
     i += 2
@@ -52,10 +52,36 @@ def one():
       if operand == 6: C = A // 2 ** C
       continue
   print()
-  print(','.join([str(x) for x in out]))
+  print('result1: '+','.join([str(x) for x in out]))
 
 def two():
-  pass
+  # b = a % 8
+  # b = b ^ 2
+  # c = a >> b
+  # a = a >> 3
+  # b = b ^ 7
+  # b = b ^ c
+  # out (b%8)
+  # if a != 0: jump 0
+  def find(p, ans):
+    if p == []: return ans
+    for t in range(8):
+      a = ans << 3 | t
+      b = a % 8
+      b = b ^ 2
+      c = a >> b
+      #a = a >> 3
+      b = b ^ 7
+      b = b ^ c
+      if b % 8 == p[-1]:
+        sub = find(p[:-1], a)
+        if sub is None: continue
+        return sub
+  with open('input.txt','r') as f:
+    numbers = re.findall('(\d+)',f.read())
+  I = list(map(int,numbers[3:]))
+  print(f'result2: {find(I,0)}')
+
 
 if __name__ == '__main__':
   one()
